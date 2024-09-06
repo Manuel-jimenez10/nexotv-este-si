@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenido a NexoTv</title>
+  <!-- Cargar Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #343a40; /* Fondo oscuro */
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+    .header {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .header img {
+      max-width: 120px;
+    }
+    .content {
+      padding: 20px;
+      text-align: center;
+    }
+    .content h1 {
+      color: #343a40; /* Color del título */
+      font-size: 24px;
+    }
+    .content p {
+      color: #555555;
+      line-height: 1.6;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #eceef1;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #ffffff;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .btn-primary:hover {
+      background-color: #0e0f10;
+      border-color: #13202d;
+    }
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      color: #999999;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="http://res.cloudinary.com/dgkazbemq/image/upload/v1725514057/xwht5urupavpniyxb7ea.png" alt="Logo de la Aplicación">
+    </div>
+    <div class="content">
+      <h1>Bienvenido, {{firstName}}!</h1>
+      <p>Gracias por registrarte en NexoTv. Esperamos que disfrutes de todas nuestras funcionalidades. Explora una experiencia increíble con nosotros.</p>
+      <a href="https://nexotv.com" class="btn-primary">Comenzar ahora</a>
+    </div>
+    <div class="footer">
+      &copy; 2024 NexoTv. Todos los derechos reservados.
+    </div>
+  </div>
+ 
+  <!-- Cargar Bootstrap JS (opcional, si necesitas funcionalidad JS de Bootstrap) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

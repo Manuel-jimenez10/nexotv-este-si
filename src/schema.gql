@@ -1,0 +1,243 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ViewHistory {
+  id: ID!
+  user: User!
+  contenido: Content!
+  fecha_visualizacion: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Content {
+  id: ID!
+  title: String!
+  description: String!
+  image: String
+  duration: String!
+  category: [String!]!
+  type: Type
+  status: Status
+  contentUrl: [String!]!
+  viewingHistories: [ViewHistory!]
+}
+
+enum Type {
+  channel
+  movie
+  series
+}
+
+enum Status {
+  active
+  inactive
+}
+
+type Review {
+  id: ID!
+  review: String!
+  date: DateTime!
+}
+
+type Subscription {
+  id: ID!
+  tipo: String!
+  price: Float!
+  stripeId: String
+  user: User
+}
+
+type Support {
+  id: ID!
+  user: User!
+  fecha_solicitud: DateTime!
+  descripcion_problema: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  userImage: [String!]
+  views: [String!]
+  roles: [String!]!
+  isActive: Boolean!
+  subscription: Subscription
+  viewingHistory: [ViewHistory!]!
+  favorites: [Float!]
+  support: [Support!]!
+}
+
+type AuthResponse {
+  token: String!
+  user: User!
+}
+
+type Query {
+  users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
+  user(id: String!): User!
+  defaultSubscription(id: String!): Subscription!
+  countUser: Int!
+  countSubscriptions: Int!
+  viewHistory(id: Int!): ViewHistory!
+  supports: [Support!]!
+  support(id: String!): Support!
+  contentAll(paginationContentArgs: PaginationContentArgs!): [Content!]!
+  contentOne(id: String!): Content!
+  revalite: AuthResponse!
+  review(id: String!): Review!
+}
+
+input PaginationArgs {
+  limit: Int
+  offset: Int
+}
+
+input ValidRolesArgs {
+  roles: [ValidRoles!] = []
+}
+
+enum ValidRoles {
+  admin
+  user
+  superUser
+}
+
+input PaginationContentArgs {
+  limit: Int
+  offset: Int
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: String!): String!
+  updateSubscription(updateSubscriptionInput: UpdateSubscriptionInput!): Subscription!
+  createViewHistory(createViewHistoryInput: CreateViewHistoryInput!): ViewHistory!
+  updateViewHistory(updateViewHistoryInput: UpdateViewHistoryInput!): ViewHistory!
+  removeViewHistory(id: Int!): ViewHistory!
+  createSupport(createSupportInput: CreateSupportInput!): Support!
+  updateSupport(id: String!, updateSupportInput: UpdateSupportInput!): Support!
+  removeSupport(id: String!): Support!
+  createContent(createContentInput: CreateContentInput!): Content!
+  updateContent(updateContentInput: UpdateContentInput!): Content!
+  removeContent(id: String!): Content!
+  signup(signupInput: SignupInput!): AuthResponse!
+  login(loginInput: LoginInput!): AuthResponse!
+
+  """Ejecuta la construccion de la base de datos"""
+  executeSeed: Boolean!
+  createCheckoutSession(createCheckoutSessionDto: CreateCheckoutSessionDto!): String!
+  createReview(createReviewInput: CreateReviewInput!): Review!
+  updateReview(updateReviewInput: UpdateReviewInput!): Review!
+  removeReview(id: String!): Review!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  firstName: String
+  lastName: String
+  id: String!
+}
+
+input UpdateSubscriptionInput {
+  tipo: Tipo
+  price: Int
+  id: String!
+  stripeId: String!
+}
+
+enum Tipo {
+  Annual
+  Monthly
+  Free
+}
+
+input CreateViewHistoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateViewHistoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateSupportInput {
+  userId: String!
+  descripcion_problema: String!
+}
+
+input UpdateSupportInput {
+  userId: String
+  descripcion_problema: String!
+}
+
+input CreateContentInput {
+  title: String!
+  description: String!
+  image: String
+  duration: String!
+  category: [String!]!
+  type: Type
+  status: Status
+  contentUrl: [String!]!
+}
+
+input UpdateContentInput {
+  title: String
+  description: String
+  image: String
+  duration: String
+  category: [String!]
+  type: Type
+  status: Status
+  contentUrl: [String!]
+}
+
+input SignupInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CreateCheckoutSessionDto {
+  priceId: String!
+  price: Float!
+  tipo: Tipo!
+  userId: String!
+}
+
+input CreateReviewInput {
+  review: String!
+  userId: String!
+  contentId: String!
+}
+
+input UpdateReviewInput {
+  review: String
+  userId: String
+  contentId: String
+  id: String!
+}
