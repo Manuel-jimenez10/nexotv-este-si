@@ -38,9 +38,9 @@ export class ContentResolver {
   @Mutation(() => Content)
   updateContent(
     @Args('updateContentInput') updateContentInput: UpdateContentInput,
-    @CurrentUser([ValidRoles.admin]) content: Content,
+    //@CurrentUser([ValidRoles.admin]) content: Content,
   ) {
-    console.log(content);
+    //console.log(content);
     return this.contentService.update(
       updateContentInput.id,
       updateContentInput,
@@ -50,9 +50,9 @@ export class ContentResolver {
   @Mutation(() => Content)
   removeContent(
     @Args('id', { type: () => String }) id: string,
-    @CurrentUser([ValidRoles.admin]) content: Content,
+    //@CurrentUser([ValidRoles.admin]) content: Content,
   ) {
-    console.log(content);
+    //console.log(content);
     return this.contentService.remove(id);
   }
 }

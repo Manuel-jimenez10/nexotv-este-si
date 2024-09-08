@@ -18,7 +18,7 @@ export class MetricsResolver {
   }
 
   @Query(() => SubscriptionCount)
-  async getSubscriptionCounts(): Promise<{ free: number, monthly: number, annual: number }> {
+  async getSubscriptionCounts(): Promise<SubscriptionCount> {
     return this.metricsService.countTypeSubscription();
   }
 }

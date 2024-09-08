@@ -1,13 +1,13 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class SubscriptionCount {
-  @Field()
-  free: number;
+  @Field(() => Int)
+  Free: number;
 
-  @Field()
-  monthly: number;
+  @Field(() => Int)
+  Monthly: number;
 
-  @Field()
-  annual: number;
+  @Field(() => Int)
+  Annual: number;
 }

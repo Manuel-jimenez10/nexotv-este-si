@@ -32,27 +32,24 @@ export class MetricsService {
     }
   }
 
-  async countTypeSubscription(): Promise<{ free: number, monthly: number, annual: number }> {
+  async countTypeSubscription(): Promise<{ Free: number, Monthly: number, Annual: number }> {
     try {
-      // Esperar la resolución de find()
       const subscriptions = await this.subscriptionRepository.find();
+      console.log('Subscriptions:', subscriptions); // Agrega esto para ver qué estás obteniendo
   
-      // Contar las suscripciones por tipo
       const freeCount = subscriptions.filter(subscription => subscription.tipo === Tipo.Free).length;
       const monthlyCount = subscriptions.filter(subscription => subscription.tipo === Tipo.Monthly).length;
       const annualCount = subscriptions.filter(subscription => subscription.tipo === Tipo.Annual).length;
   
-      // Retornar un objeto con las cantidades de cada tipo de suscripción
       return {
-        free: freeCount,
-        monthly: monthlyCount,
-        annual: annualCount
+        Free: freeCount,
+        Monthly: monthlyCount,
+        Annual: annualCount,
       };
     } catch (error) {
-      // Manejar el error adecuadamente
       console.error('Error counting subscription types:', error);
       throw new Error('Error counting subscription types');
     }
-  }
+  }  
   
 }

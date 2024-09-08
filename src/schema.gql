@@ -75,9 +75,9 @@ type User {
 }
 
 type SubscriptionCount {
-  free: Float!
-  monthly: Float!
-  annual: Float!
+  Free: Int!
+  Monthly: Int!
+  Annual: Int!
 }
 
 type AuthResponse {
