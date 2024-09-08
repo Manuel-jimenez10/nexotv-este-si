@@ -1,6 +1,7 @@
 import { MetricsService } from './metrics.service';
 import { Metrics } from './entities/metric.entity';
 import { Int, Query, Resolver } from '@nestjs/graphql';
+import { SubscriptionCount } from './dto/countSubscription.input';
 
 @Resolver(() => Metrics)
 export class MetricsResolver {
@@ -14,5 +15,10 @@ export class MetricsResolver {
   @Query(() => Int, { name: 'countSubscriptions' })
   countSubscriptions() {
     return this.metricsService.countSubscriptions();
+  }
+
+  @Query(() => SubscriptionCount)
+  async getSubscriptionCounts(): Promise<{ free: number, monthly: number, annual: number }> {
+    return this.metricsService.countTypeSubscription();
   }
 }

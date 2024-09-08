@@ -74,6 +74,12 @@ type User {
   support: [Support!]!
 }
 
+type SubscriptionCount {
+  free: Float!
+  monthly: Float!
+  annual: Float!
+}
+
 type AuthResponse {
   token: String!
   user: User!
@@ -85,6 +91,7 @@ type Query {
   defaultSubscription(id: String!): Subscription!
   countUser: Int!
   countSubscriptions: Int!
+  getSubscriptionCounts: SubscriptionCount!
   viewHistory(id: Int!): ViewHistory!
   supports: [Support!]!
   support(id: String!): Support!
