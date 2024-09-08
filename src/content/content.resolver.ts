@@ -38,9 +38,9 @@ export class ContentResolver {
   @Mutation(() => Content)
   updateContent(
     @Args('updateContentInput') updateContentInput: UpdateContentInput,
-    @CurrentUser([ValidRoles.admin]) content: Content,
+    //@CurrentUser([ValidRoles.admin]) content: Content,
   ) {
-    console.log(content);
+    //console.log(content);
     return this.contentService.update(
       updateContentInput.id,
       updateContentInput,

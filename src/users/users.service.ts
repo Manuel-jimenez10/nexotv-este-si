@@ -105,6 +105,9 @@ export class UsersService {
         id,
         ...updateUserInput,
       });
+
+      console.log(user);
+
       if (!user) throw new NotFoundException(`User with id: ${id} not found`);
       return await this.usersRepository.save(user);
     } catch (error) {

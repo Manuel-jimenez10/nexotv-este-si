@@ -13,7 +13,7 @@ export class CreateUserInput {
 
   @Field(() => String)
   @IsNotEmpty()
-  @Length(1, 40)
+  @Length(1, 80)
   firstName: string;
 
   @Field(() => String)
