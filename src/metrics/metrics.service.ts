@@ -9,7 +9,7 @@ export class MetricsService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-    @InjectRepository(User)
+    @InjectRepository(Subscription)
     private readonly subscriptionRepository: Repository<Subscription>,
   ) {}
   async countUser(): Promise<number> {
