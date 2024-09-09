@@ -29,7 +29,7 @@ registerEnumType(Tipo, {
   name: 'subscription',
 })
 export class Subscription {
-  @Field(() => ID) // Decorador para el campo ID
+  @Field(() => ID, {nullable: true}) // Decorador para el campo ID
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

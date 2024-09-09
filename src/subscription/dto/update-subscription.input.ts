@@ -1,16 +1,19 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 import { CreateSubscriptionInput } from './create-subscription.input';
 import { InputType, Field, PartialType } from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
 
 @InputType()
 export class UpdateSubscriptionInput extends PartialType(
   CreateSubscriptionInput,
 ) {
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
+  @IsOptional()
   @IsUUID()
-  id: string;
+  userId?: string;
 
-  @Field(() => String)
+  @Field(() => String, {nullable: true})
   @IsString()
-  stripeId: string;
+  @IsOptional()
+  stripeId?: string;
 }

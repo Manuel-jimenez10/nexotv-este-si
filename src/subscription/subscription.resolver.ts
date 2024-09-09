@@ -12,7 +12,7 @@ export class SubscriptionResolver {
     return this.subscriptionService.defaultSubscription(id);
   }
 
-  @Mutation(() => Subscription)
+  @Mutation(() => Subscription, {nullable: true})
   async updateSubscription(
     @Args('updateSubscriptionInput')
     updateSubscriptionInput: UpdateSubscriptionInput,

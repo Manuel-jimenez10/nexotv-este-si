@@ -45,7 +45,7 @@ type Review {
 }
 
 type Subscription {
-  id: ID!
+  id: ID
   tipo: String
   price: Float!
   stripeId: String
@@ -126,7 +126,7 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): String!
-  updateSubscription(updateSubscriptionInput: UpdateSubscriptionInput!): Subscription!
+  updateSubscription(updateSubscriptionInput: UpdateSubscriptionInput!): Subscription
   createViewHistory(createViewHistoryInput: CreateViewHistoryInput!): ViewHistory!
   updateViewHistory(updateViewHistoryInput: UpdateViewHistoryInput!): ViewHistory!
   removeViewHistory(id: Int!): ViewHistory!
@@ -166,8 +166,8 @@ input UpdateUserInput {
 input UpdateSubscriptionInput {
   tipo: Tipo
   price: Int
-  id: String!
-  stripeId: String!
+  userId: String
+  stripeId: String
 }
 
 enum Tipo {

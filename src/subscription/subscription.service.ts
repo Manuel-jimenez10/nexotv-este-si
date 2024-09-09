@@ -61,9 +61,12 @@ export class SubscriptionService {
   async update(
     updateSubscriptionInput: UpdateSubscriptionInput,
   ): Promise<Subscription> {
-    const { id, ...rest } = updateSubscriptionInput;
+    const { userId, ...rest } = updateSubscriptionInput;
+    const user = await this.usersRepository.findOne({where: {id: userId}})
+    const getSubscription = await this.subscriptionRepository.findOne({where: {user}})
+
     const subscription = await this.subscriptionRepository.preload({
-      id,
+      id: getSubscription.id,
       ...rest,
     });
 

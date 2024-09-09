@@ -49,15 +49,11 @@ export class StripeService {
       throw new NotFoundException('User not found');
     }
 
-    const subscription = await this.subscriptionRepository.findOne({
-      where: { user },
-    });
-
-    await this.subscriptionService.update({
-      id: subscription.id,
+    const subscription = await this.subscriptionService.update({
+      userId,
       price,
       tipo,
-      stripeId: session.id,
+      stripeId: session.id
     });
 
     return session.id;
