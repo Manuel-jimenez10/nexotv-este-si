@@ -25,7 +25,7 @@ export class UsersResolver {
   async findAll(
     @Args('paginationArgs') paginationArgs: PaginationArgs,
     @Args('validRolesArgs') validRolesArgs: ValidRolesArgs,
-    //@CurrentUser([ValidRoles.admin]) user: User,
+    @CurrentUser([ValidRoles.admin]) user: User,
   ): Promise<User[]> {
     return await this.usersService.findAll(
       paginationArgs,

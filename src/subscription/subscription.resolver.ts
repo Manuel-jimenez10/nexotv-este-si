@@ -20,8 +20,8 @@ export class SubscriptionResolver {
     return this.subscriptionService.update(updateSubscriptionInput);
   }
 
-  @Query(() => Subscription)
-  async getSubscription(@Args('userId2') userId2: string) {
-    return this.subscriptionService.getSubscription(userId2);
+  @Query(() => [Subscription])
+  async getSubscription() {
+    return await this.subscriptionService.getSubscription();
   }
 }

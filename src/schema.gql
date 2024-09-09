@@ -46,7 +46,7 @@ type Review {
 
 type Subscription {
   id: ID!
-  tipo: String!
+  tipo: String
   price: Float!
   stripeId: String
   user: User
@@ -89,7 +89,7 @@ type Query {
   users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
   user(id: String!): User!
   defaultSubscription(id: String!): Subscription!
-  getSubscription(userId2: String!): Subscription!
+  getSubscription: [Subscription!]!
   countUser: Int!
   countSubscriptions: Int!
   getSubscriptionCounts: SubscriptionCount!
@@ -160,6 +160,7 @@ input UpdateUserInput {
   firstName: String
   lastName: String
   id: String!
+  roles: [String!]
 }
 
 input UpdateSubscriptionInput {

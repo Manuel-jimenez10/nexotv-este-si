@@ -11,4 +11,10 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   @IsArray()
   @IsString({ each: true })
   userImage?: string[];
+
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  roles?: string[];
 }

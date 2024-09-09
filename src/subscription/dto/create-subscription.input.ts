@@ -4,9 +4,9 @@ import { Tipo } from '../entities/subscription.entity';
 
 @InputType()
 export class CreateSubscriptionInput {
-  @Field(() => Tipo)
+  @Field(() => Tipo, {nullable: true})
   @IsEnum(Tipo)
-  tipo: Tipo;
+  tipo?: Tipo;
 
   @Field(() => Int)
   @IsNumber({}, { message: 'Price must be a number' })

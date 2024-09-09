@@ -33,13 +33,13 @@ export class Subscription {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => String) // Decorador para campos de tipo Enum/String
+  @Field(() => String, {nullable: true}) // Decorador para campos de tipo Enum/String
   @Column({
     type: 'enum',
 
     enum: Tipo,
   })
-  tipo: Tipo;
+  tipo?: Tipo;
 
   @Field(() => Float) // Decorador para campos de tipo decimal
   @Column({

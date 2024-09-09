@@ -83,11 +83,7 @@ export class SubscriptionService {
     throw new InternalServerErrorException('Pleace check server logs');
   }
 
-  async getSubscription(userId: string) {
-    const user = await this.usersRepository.findOneBy({ id: userId });
-    const subscription = await this.subscriptionRepository.findOne({
-      where: { user },
-    });
-    return subscription;
+  async getSubscription() {
+     return await this.subscriptionRepository.find({relations: {user: true}});
   }
 }
