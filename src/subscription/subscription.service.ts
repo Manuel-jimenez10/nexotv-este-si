@@ -89,4 +89,13 @@ export class SubscriptionService {
   async getSubscription() {
      return await this.subscriptionRepository.find({relations: {user: true}});
   }
+
+  //obtener usuarios con una suscripcion especifica
+  async getUsersBySubscriptionType(tipo: Tipo): Promise<User[]> {
+    const subscriptions = await this.subscriptionRepository.find({
+      where: { tipo },
+      relations: ['user'],
+    });
+    return subscriptions.map(sub => sub.user);
+  }
 }

@@ -19,6 +19,7 @@ import { AuthService } from './auth/auth.service';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ReviewModule } from './review/review.module';
+import { CronService } from './cron/cron.service';
 
 @Module({
   imports: [
@@ -62,10 +63,12 @@ import { ReviewModule } from './review/review.module';
     ReviewModule,
   ],
   controllers: [],
-  providers: [AuthService],
+  providers: [AuthService, CronService],
+  exports: [CronService],
 })
 export class AppModule {
-  constructor() {
+  constructor(private readonly cronService: CronService) {
+    this.cronService.startCronJob(); // Iniciar el cron job cuando arranca la aplicación) {
     console.log('host', process.env.STATE);
     console.log('host', process.env.DB_HOST);
     console.log('port', +process.env.DB_PORT);

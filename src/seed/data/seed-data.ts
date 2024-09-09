@@ -166,7 +166,8 @@ export const SEED_DATA: CreateContentInput[] = [
   {
     title: 'Aves de Presa - 10 primeros minutos',
     description: 'Los primeros 10 minutos de Aves de Presa.',
-    image: 'https://path_to_image.jpg',
+    image:
+      'https://m.media-amazon.com/images/M/MV5BYTgxNmNlYjAtNGQ2Ni00MmYxLTkwODItYmIxNTRlNDU2OTIzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
     duration: '0:10',
     category: ['Acción', 'Aventura'],
     type: Type.movie,
@@ -190,7 +191,8 @@ export const SEED_DATA: CreateContentInput[] = [
   {
     title: 'Black Adam - Tráiler Oficial 2',
     description: 'Segundo tráiler oficial de Black Adam.',
-    image: 'https://path_to_image.jpg',
+    image:
+      'https://m.media-amazon.com/images/M/MV5BZTNiYzBmYTUtZDVmNC00NzJhLWFmNDEtNzM4NjJjZWI5NTQyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
     duration: '0:02',
     category: ['Acción', 'Ciencia ficción'],
     type: Type.series,
@@ -202,7 +204,8 @@ export const SEED_DATA: CreateContentInput[] = [
   {
     title: 'CREED III - Tráiler Oficial',
     description: 'Tráiler oficial de CREED III.',
-    image: 'https://path_to_image.jpg',
+    image:
+      'https://m.media-amazon.com/images/M/MV5BY2ZlYmMxNDQtYmU2YS00ODY4LWJlZmEtNzM2NWNhN2FjNjVlXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
     duration: '0:02',
     category: ['Drama', 'Deportes'],
     type: Type.series,
@@ -214,7 +217,8 @@ export const SEED_DATA: CreateContentInput[] = [
   {
     title: 'Doctor Sueño - Primeros 10 minutos',
     description: 'Los primeros 10 minutos de Doctor Sueño.',
-    image: 'https://path_to_image.jpg',
+    image:
+      'https://m.media-amazon.com/images/M/MV5BNzU4OTg3ODY4M15BMl5BanBnXkFtZTcwNTU2OTkzNg@@._V1_FMjpg_UX1000_.jpg',
     duration: '0:10',
     category: ['Terror', 'Drama'],
     type: Type.series,
@@ -226,7 +230,8 @@ export const SEED_DATA: CreateContentInput[] = [
   {
     title: 'Películas y Tráilers',
     description: 'Colección de clips y tráilers oficiales.',
-    image: 'https://path_to_image.jpg',
+    image:
+      'https://m.media-amazon.com/images/M/MV5BNTQxYmM1NzQtY2FiZS00MzRhLTljZDYtZjRmMGNiMWI3NTQxXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
     duration: 'Varios',
     category: ['Acción', 'Aventura', 'Ciencia ficción', 'Drama', 'Terror'],
     type: Type.series,
