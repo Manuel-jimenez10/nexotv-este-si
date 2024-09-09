@@ -63,7 +63,6 @@ export class User {
 
   @Field(() => Subscription, { nullable: true }) // Decorador para GraphQL
   @OneToOne(() => Subscription, (subscription) => subscription.user)
-  @JoinColumn()
   subscription: Subscription;
 
   @Field(() => [ViewHistory]) // Decorador para la relación One-to-Many con ViewingsHistory

@@ -89,6 +89,7 @@ type Query {
   users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
   user(id: String!): User!
   defaultSubscription(id: String!): Subscription!
+  getSubscription(userId2: String!): Subscription!
   countUser: Int!
   countSubscriptions: Int!
   getSubscriptionCounts: SubscriptionCount!
