@@ -66,16 +66,24 @@ export class ContentService {
     id: string,
     updateContenidoInput: UpdateContentInput,
   ): Promise<Content> {
+    const { amount, ...rest } = updateContenidoInput;
+ 
+    const { rate, counterRate } = await this.contenidoRepository.findOneBy({
+      id,
+    });
+ 
     try {
       const contenido = await this.contenidoRepository.preload({
         id,
-        ...updateContenidoInput,
+        rate: rate + amount,
+        counterRate: counterRate + 1,
+        ...rest,
       });
-
+ 
       if (!contenido) {
         throw new NotFoundException(`Content with id: ${id} not found`);
       }
-
+ 
       return this.contenidoRepository.save(contenido);
     } catch (error) {
       this.handleDbErros(error);
@@ -131,5 +139,12 @@ export class ContentService {
     this.logger.error(error);
 
     throw new InternalServerErrorException('Pleace check server logs');
+  }
+
+  async getRate(id: string) {
+    const { rate, counterRate } = await this.contenidoRepository.findOneBy({
+      id,
+    });
+    return rate / counterRate;
   }
 }

@@ -21,7 +21,7 @@ export class UsersResolver {
     return await this.usersService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'users' })
+  @Query(() => [User], { name: 'users', description: "find all devuelve todos los usuarios" })
   async findAll(
     @Args('paginationArgs') paginationArgs: PaginationArgs,
     @Args('validRolesArgs') validRolesArgs: ValidRolesArgs,

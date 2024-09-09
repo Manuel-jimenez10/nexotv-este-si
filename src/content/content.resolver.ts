@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Float } from '@nestjs/graphql';
 import { Content } from './entities/content.entity';
 import { ContentService } from './content.service';
 import { CreateContentInput } from './dto/inputs/create-content.input';
@@ -54,5 +54,10 @@ export class ContentResolver {
   ) {
     //console.log(content);
     return this.contentService.remove(id);
+  }
+
+  @Query(() => Float, { name: 'getRate' })
+  getRate(@Args('contentId') id: string) {
+    return this.contentService.getRate(id);
   }
 }

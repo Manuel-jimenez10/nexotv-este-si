@@ -25,6 +25,7 @@ type Content {
   status: Status
   contentUrl: [String!]!
   viewingHistories: [ViewHistory!]
+  rate: Int
 }
 
 enum Type {
@@ -86,6 +87,7 @@ type AuthResponse {
 }
 
 type Query {
+  """find all devuelve todos los usuarios"""
   users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
   user(id: String!): User!
   defaultSubscription(id: String!): Subscription!
@@ -98,6 +100,7 @@ type Query {
   support(id: String!): Support!
   contentAll(paginationContentArgs: PaginationContentArgs!): [Content!]!
   contentOne(id: String!): Content!
+  getRate(contentId: String!): Float!
   revalite: AuthResponse!
   review(id: String!): Review!
 }
@@ -218,6 +221,7 @@ input UpdateContentInput {
   status: Status
   contentUrl: [String!]
   id: String!
+  amount: Int
 }
 
 input SignupInput {
