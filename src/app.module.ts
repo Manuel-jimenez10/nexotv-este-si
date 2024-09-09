@@ -46,7 +46,6 @@ import { ReviewModule } from './review/review.module';
       database: process.env.DB_NAME,
       synchronize: true,
       autoLoadEntities: true,
-      dropSchema: true
     }),
     UsersModule,
     MetricsModule,
