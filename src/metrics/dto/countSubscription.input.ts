@@ -1,13 +1,13 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 
-@ObjectType()
+@ObjectType({ description: 'Representa la cantidad de suscripciones por tipo.' })
 export class SubscriptionCount {
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Cantidad de suscripciones de tipo Free.' })
   Free: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Cantidad de suscripciones de tipo Monthly.' })
   Monthly: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { description: 'Cantidad de suscripciones de tipo Annual.' })
   Annual: number;
 }

@@ -9,7 +9,10 @@ import { BadRequestException } from '@nestjs/common';
 export class ReviewResolver {
   constructor(private readonly reviewService: ReviewService) {}
 
-  @Mutation(() => Review, { name: 'createReview' })
+  @Mutation(() => Review, { 
+    name: 'createReview', 
+    description: 'createReview: Crea una nueva reseña en la plataforma. Lanza una excepción si el campo de reseña es nulo.' 
+  })
   async createReview(
     @Args('createReviewInput') createReviewInput: CreateReviewInput,
   ) {
@@ -22,24 +25,36 @@ export class ReviewResolver {
     return review;
   }
 
-  @Query(() => [Review], { name: 'review' })
+  @Query(() => [Review], { 
+    name: 'review', 
+    description: 'findAll: Obtiene todas las reseñas disponibles en la plataforma.' 
+  })
   findAll() {
     return this.reviewService.findAll();
   }
 
-  @Query(() => Review, { name: 'review' })
+  @Query(() => Review, { 
+    name: 'review', 
+    description: 'findOne: Obtiene una reseña específica basada en el ID proporcionado.' 
+  })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.reviewService.findOne(id);
   }
 
-  @Mutation(() => Review)
+  @Mutation(() => Review, { 
+    name: 'updateReview', 
+    description: 'updateReview: Actualiza una reseña existente con la información proporcionada en el input de actualización.' 
+  })
   updateReview(
     @Args('updateReviewInput') updateReviewInput: UpdateReviewInput,
   ) {
     return this.reviewService.update(updateReviewInput.id, updateReviewInput);
   }
 
-  @Mutation(() => Review)
+  @Mutation(() => Review, { 
+    name: 'removeReview', 
+    description: 'removeReview: Elimina una reseña basada en el ID proporcionado.' 
+  })
   removeReview(@Args('id', { type: () => String }) id: string) {
     return this.reviewService.remove(id);
   }

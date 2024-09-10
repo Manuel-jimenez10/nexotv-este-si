@@ -8,27 +8,25 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType() // Decorador para convertir la clase en un tipo GraphQL
-@Entity({
-  name: 'support',
-})
+@ObjectType({ description: 'Representa una solicitud de soporte hecha por un usuario, incluyendo detalles del problema y la fecha de solicitud' })
+@Entity({ name: 'support' })
 export class Support {
-  @Field(() => ID) // Decorador para el campo ID
+  @Field(() => ID, { description: 'Identificador único de la solicitud de soporte' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => User) // Relación Many-to-One expuesta como campo GraphQL
+  @Field(() => User, { description: 'Usuario que hizo la solicitud de soporte' })
   @ManyToOne(() => User, (user) => user.support)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Field(() => Date) // Decorador para campos de tipo Date
+  @Field(() => Date, { description: 'Fecha en la que se hizo la solicitud de soporte' })
   @Column({
     type: 'date',
   })
   fecha_solicitud: Date;
 
-  @Field(() => String) // Decorador para campos de tipo String
+  @Field(() => String, { description: 'Descripción del problema reportado en la solicitud de soporte' })
   @Column({
     type: 'varchar',
     length: 255,

@@ -6,7 +6,7 @@ import { CreateCheckoutSessionDto } from './createCheckout.dto';
 export class StripeResolver {
   constructor(private readonly stripeService: StripeService) {}
 
-  @Mutation(() => String, { name: 'createCheckoutSession' }) // Define el tipo de retorno, en este caso un ID de sesión (string)
+  @Mutation(() => String, { name: 'createCheckoutSession', description: "createCheckoutSession: Crea una sesión de pago en Stripe y devuelve el ID de la sesión" })
   async createCheckoutSession(
     @Args('createCheckoutSessionDto')
     createCheckoutSessionDto: CreateCheckoutSessionDto,

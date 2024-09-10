@@ -1,28 +1,28 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@ObjectType() // Decorador para convertir la clase en un tipo GraphQL
+@ObjectType({ description: 'Metrics: Entidad que representa las métricas relacionadas con los usuarios y suscripciones.' })
 @Entity({
   name: 'metrics',
 })
 export class Metrics {
-  @Field(() => ID) // Decorador para el campo ID
+  @Field(() => ID, { description: 'ID: Identificador único de las métricas.' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => Number) // Decorador para campos de tipo número
+  @Field(() => Number, { description: 'cantidad_usuarios_registrados: Cantidad total de usuarios registrados en la plataforma.' })
   @Column({
     type: 'int',
   })
   cantidad_usuarios_registrados: number;
 
-  @Field(() => Number) // Decorador para campos de tipo número
+  @Field(() => Number, { description: 'cantidad_usuarios_premium: Cantidad total de usuarios que tienen una suscripción premium.' })
   @Column({
     type: 'int',
   })
   cantidad_usuarios_premium: number;
 
-  @Field(() => Number) // Decorador para campos de tipo número
+  @Field(() => Number, { description: 'cantidad_usuarios_free: Cantidad total de usuarios que utilizan la plataforma de manera gratuita.' })
   @Column({
     type: 'int',
   })

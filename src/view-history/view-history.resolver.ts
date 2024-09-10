@@ -8,7 +8,7 @@ import { UpdateViewHistoryInput } from './dto/update-view-history.input';
 export class ViewHistoryResolver {
   constructor(private readonly viewHistoryService: ViewHistoryService) {}
 
-  @Mutation(() => ViewHistory)
+  @Mutation(() => ViewHistory, { description: 'Crea un nuevo registro de historial de vistas' })
   createViewHistory(
     @Args('createViewHistoryInput')
     createViewHistoryInput: CreateViewHistoryInput,
@@ -16,17 +16,17 @@ export class ViewHistoryResolver {
     return this.viewHistoryService.create(createViewHistoryInput);
   }
 
-  @Query(() => [ViewHistory], { name: 'viewHistory' })
+  @Query(() => [ViewHistory], { name: 'viewHistories', description: 'Obtiene todos los registros de historial de vistas' })
   findAll() {
     return this.viewHistoryService.findAll();
   }
 
-  @Query(() => ViewHistory, { name: 'viewHistory' })
+  @Query(() => ViewHistory, { name: 'viewHistory', description: 'Obtiene un registro de historial de vistas por ID' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.viewHistoryService.findOne(id);
   }
 
-  @Mutation(() => ViewHistory)
+  @Mutation(() => ViewHistory, { description: 'Actualiza un registro de historial de vistas' })
   updateViewHistory(
     @Args('updateViewHistoryInput')
     updateViewHistoryInput: UpdateViewHistoryInput,
@@ -37,7 +37,7 @@ export class ViewHistoryResolver {
     );
   }
 
-  @Mutation(() => ViewHistory)
+  @Mutation(() => ViewHistory, { description: 'Elimina un registro de historial de vistas por ID' })
   removeViewHistory(@Args('id', { type: () => Int }) id: number) {
     return this.viewHistoryService.remove(id);
   }

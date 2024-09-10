@@ -14,7 +14,9 @@ import { ValidRoles } from 'src/auth/enums/valid-roles.emun';
 export class ContentResolver {
   constructor(private readonly contentService: ContentService) {}
 
-  @Mutation(() => Content)
+  @Mutation(() => Content, { 
+    description: 'createContent: Crea un nuevo contenido con la información proporcionada.' 
+  })
   createContent(
     @Args('createContentInput') createContentInput: CreateContentInput,
     @CurrentUser([ValidRoles.admin]) content: Content,
@@ -23,19 +25,27 @@ export class ContentResolver {
     return this.contentService.create(createContentInput);
   }
 
-  @Query(() => [Content], { name: 'contentAll' })
+  @Query(() => [Content], { 
+    name: 'contentAll', 
+    description: 'findAll: Obtiene una lista de todos los contenidos con paginación.' 
+  })
   findAll(
     @Args('paginationContentArgs') paginationContentArgs: PaginationContentArgs,
   ) {
     return this.contentService.findAll(paginationContentArgs);
   }
 
-  @Query(() => Content, { name: 'contentOne' })
+  @Query(() => Content, { 
+    name: 'contentOne', 
+    description: 'findOne: Obtiene un contenido específico por su ID.' 
+  })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.contentService.findOne(id);
   }
 
-  @Mutation(() => Content)
+  @Mutation(() => Content, { 
+    description: 'updateContent: Actualiza un contenido existente con la nueva información proporcionada.' 
+  })
   updateContent(
     @Args('updateContentInput') updateContentInput: UpdateContentInput,
     //@CurrentUser([ValidRoles.admin]) content: Content,
@@ -47,7 +57,9 @@ export class ContentResolver {
     );
   }
 
-  @Mutation(() => Content)
+  @Mutation(() => Content, { 
+    description: 'removeContent: Elimina un contenido específico por su ID.' 
+  })
   removeContent(
     @Args('id', { type: () => String }) id: string,
     //@CurrentUser([ValidRoles.admin]) content: Content,
@@ -56,7 +68,10 @@ export class ContentResolver {
     return this.contentService.remove(id);
   }
 
-  @Query(() => Float, { name: 'getRate' })
+  @Query(() => Float, { 
+    name: 'getRate', 
+    description: 'getRate: Obtiene la tasa de un contenido específico por su ID.' 
+  })
   getRate(@Args('contentId') id: string) {
     return this.contentService.getRate(id);
   }

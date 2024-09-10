@@ -8,26 +8,26 @@ import { UpdateSupportInput } from './dto/inputs';
 export class SupportResolver {
   constructor(private readonly supportService: SupportService) {}
 
-  @Mutation(() => Support)
+  @Mutation(() => Support, { description: 'Crea un nuevo registro de soporte' })
   async createSupport(
     @Args('createSupportInput') createSupportInput: CreateSupportInput,
   ) {
     return this.supportService.create(createSupportInput);
   }
 
-  @Query(() => [Support], { name: 'supports' })
+  @Query(() => [Support], { name: 'supports', description: 'Obtiene todos los registros de soporte' })
   async findAll(): Promise<Support[]> {
     return this.supportService.findAll();
   }
 
-  @Query(() => Support, { name: 'support' })
+  @Query(() => Support, { name: 'support', description: 'Obtiene un registro de soporte por ID' })
   async findOne(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Support> {
     return this.supportService.findOne(id);
   }
 
-  @Mutation(() => Support)
+  @Mutation(() => Support, { description: 'Actualiza un registro de soporte por ID' })
   async updateSupport(
     @Args('id', { type: () => String }) id: string,
     @Args('updateSupportInput') updateSupportDto: UpdateSupportInput,
@@ -35,7 +35,7 @@ export class SupportResolver {
     return this.supportService.update(id, updateSupportDto);
   }
 
-  @Mutation(() => Support)
+  @Mutation(() => Support, { description: 'Elimina un registro de soporte por ID' })
   async removeSupport(
     @Args('id', { type: () => String }) id: string,
   ): Promise<Support> {

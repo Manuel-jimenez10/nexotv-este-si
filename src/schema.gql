@@ -2,10 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""
+Entidad que representa el historial de vistas de contenido por parte de los usuarios.
+"""
 type ViewHistory {
+  """Identificador único del historial de vistas"""
   id: ID!
+
+  """Usuario que realizó la vista del contenido"""
   user: User!
+
+  """Contenido que fue visto por el usuario"""
   contenido: Content!
+
+  """Fecha en la que se realizó la visualización del contenido"""
   fecha_visualizacion: DateTime!
 }
 
@@ -14,244 +24,628 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+"""
+Representa el contenido que puede ser visualizado, revisado y categorizado. Incluye detalles como título, descripción, imagen, duración, categoría, tipo, estado y URLs del contenido.
+"""
 type Content {
+  """ID: Identificador único del contenido."""
   id: ID!
+
+  """title: Título del contenido."""
   title: String!
+
+  """description: Descripción detallada del contenido."""
   description: String!
+
+  """image: URL de la imagen asociada al contenido."""
   image: String
+
+  """duration: Duración del contenido."""
   duration: String!
+
+  """category: Categorías asociadas al contenido."""
   category: [String!]!
+
+  """type: Tipo del contenido."""
   type: Type
+
+  """status: Estado del contenido."""
   status: Status
+
+  """contentUrl: URLs del contenido."""
   contentUrl: [String!]!
+
+  """viewingHistories: Historial de visualización asociado al contenido."""
   viewingHistories: [ViewHistory!]
+
+  """rate: Calificación del contenido."""
   rate: Int
 }
 
+"""
+Tipo de contenido disponible, puede ser un canal, una película o una serie
+"""
 enum Type {
   channel
   movie
   series
 }
 
+"""Estado del contenido, puede ser activo o inactivo"""
 enum Status {
   active
   inactive
 }
 
+"""Representa una reseña hecha por un usuario sobre un contenido"""
 type Review {
+  """Identificador único de la reseña, generado automáticamente como UUID"""
   id: ID!
-  review: String!
+
+  """Contenido de la reseña escrita, puede ser nulo"""
+  review: String
+
+  """Fecha en la que se creó la reseña"""
   date: DateTime!
+
+  """Usuario que escribió la reseña"""
+  user: User!
+
+  """Contenido sobre el que se escribió la reseña"""
+  content: Content!
 }
 
+"""
+Representa una suscripción de usuario con detalles como tipo, precio, y la relación con el usuario
+"""
 type Subscription {
+  """Identificador único de la suscripción"""
   id: ID
-  tipo: String
+
+  """Tipo de suscripción, puede ser anual, mensual o gratuita"""
+  tipo: Tipo
+
+  """Precio de la suscripción en formato decimal"""
   price: Float!
+
+  """ID de la suscripción en Stripe, si aplica"""
   stripeId: String
+
+  """Usuario asociado con la suscripción"""
   user: User
 }
 
-type Support {
-  id: ID!
-  user: User!
-  fecha_solicitud: DateTime!
-  descripcion_problema: String!
-}
-
-type User {
-  id: ID!
-  email: String!
-  firstName: String!
-  lastName: String!
-  userImage: [String!]
-  views: [String!]
-  roles: [String!]!
-  isActive: Boolean!
-  subscription: Subscription
-  viewingHistory: [ViewHistory!]!
-  favorites: [Float!]
-  support: [Support!]!
-}
-
-type SubscriptionCount {
-  Free: Int!
-  Monthly: Int!
-  Annual: Int!
-}
-
-type AuthResponse {
-  token: String!
-  user: User!
-}
-
-type Query {
-  """find all devuelve todos los usuarios"""
-  users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
-  user(id: String!): User!
-  defaultSubscription(id: String!): Subscription!
-  getSubscription: [Subscription!]!
-  countUser: Int!
-  countSubscriptions: Int!
-  getSubscriptionCounts: SubscriptionCount!
-  viewHistory(id: Int!): ViewHistory!
-  supports: [Support!]!
-  support(id: String!): Support!
-  contentAll(paginationContentArgs: PaginationContentArgs!): [Content!]!
-  contentOne(id: String!): Content!
-  getRate(contentId: String!): Float!
-  revalite: AuthResponse!
-  review(id: String!): Review!
-}
-
-input PaginationArgs {
-  limit: Int
-  offset: Int
-}
-
-input ValidRolesArgs {
-  roles: [ValidRoles!] = []
-}
-
-enum ValidRoles {
-  admin
-  user
-  superUser
-}
-
-input PaginationContentArgs {
-  limit: Int
-  offset: Int
-}
-
-type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: String!): String!
-  updateSubscription(updateSubscriptionInput: UpdateSubscriptionInput!): Subscription
-  createViewHistory(createViewHistoryInput: CreateViewHistoryInput!): ViewHistory!
-  updateViewHistory(updateViewHistoryInput: UpdateViewHistoryInput!): ViewHistory!
-  removeViewHistory(id: Int!): ViewHistory!
-  createSupport(createSupportInput: CreateSupportInput!): Support!
-  updateSupport(id: String!, updateSupportInput: UpdateSupportInput!): Support!
-  removeSupport(id: String!): Support!
-  createContent(createContentInput: CreateContentInput!): Content!
-  updateContent(updateContentInput: UpdateContentInput!): Content!
-  removeContent(id: String!): Content!
-  signup(signupInput: SignupInput!): AuthResponse!
-  login(loginInput: LoginInput!): AuthResponse!
-
-  """Ejecuta la construccion de la base de datos"""
-  executeSeed: Boolean!
-  createCheckoutSession(createCheckoutSessionDto: CreateCheckoutSessionDto!): String!
-  createReview(createReviewInput: CreateReviewInput!): Review!
-  updateReview(updateReviewInput: UpdateReviewInput!): Review!
-  removeReview(id: String!): Review!
-}
-
-input CreateUserInput {
-  email: String!
-  password: String!
-  firstName: String!
-  lastName: String!
-}
-
-input UpdateUserInput {
-  email: String
-  password: String
-  firstName: String
-  lastName: String
-  id: String!
-  roles: [String!]
-}
-
-input UpdateSubscriptionInput {
-  tipo: Tipo
-  price: Int
-  userId: String
-  stripeId: String
-}
-
+"""Tipo de suscripción disponible en el sistema"""
 enum Tipo {
   Annual
   Monthly
   Free
 }
 
-input CreateViewHistoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
+"""
+Representa una solicitud de soporte hecha por un usuario, incluyendo detalles del problema y la fecha de solicitud
+"""
+type Support {
+  """Identificador único de la solicitud de soporte"""
+  id: ID!
 
-input UpdateViewHistoryInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
+  """Usuario que hizo la solicitud de soporte"""
+  user: User!
 
-input CreateSupportInput {
-  userId: String!
+  """Fecha en la que se hizo la solicitud de soporte"""
+  fecha_solicitud: DateTime!
+
+  """Descripción del problema reportado en la solicitud de soporte"""
   descripcion_problema: String!
 }
 
-input UpdateSupportInput {
-  userId: String
-  descripcion_problema: String!
-}
+"""
+Entidad de usuario que representa la información del usuario, incluyendo sus suscripciones, historial de vistas, soportes y revisiones.
+"""
+type User {
+  """Identificador único del usuario"""
+  id: ID!
 
-input CreateContentInput {
-  title: String!
-  description: String!
-  image: String
-  duration: String!
-  category: [String!]!
-  type: Type
-  status: Status
-  contentUrl: [String!]!
-}
-
-input UpdateContentInput {
-  title: String
-  description: String
-  image: String
-  duration: String
-  category: [String!]
-  type: Type
-  status: Status
-  contentUrl: [String!]
-  id: String!
-  amount: Int
-}
-
-input SignupInput {
+  """Correo electrónico del usuario"""
   email: String!
-  password: String!
+
+  """Nombre del usuario"""
   firstName: String!
+
+  """Apellido del usuario"""
+  lastName: String!
+
+  """Imágenes del usuario"""
+  userImage: [String!]
+
+  """Vistas del usuario"""
+  views: [String!]
+
+  """Roles asignados al usuario"""
+  roles: [String!]!
+
+  """Estado de activación del usuario"""
+  isActive: Boolean!
+
+  """Suscripción asociada al usuario"""
+  subscription: Subscription
+
+  """Historial de vistas del usuario"""
+  viewingHistory: [ViewHistory!]!
+
+  """Favoritos del usuario, representados por números"""
+  favorites: [Float!]
+
+  """Soportes asociados al usuario"""
+  support: [Support!]!
+
+  """Revisiones hechas por el usuario"""
+  review: [Review!]!
+}
+
+"""Representa la cantidad de suscripciones por tipo."""
+type SubscriptionCount {
+  """Cantidad de suscripciones de tipo Free."""
+  Free: Int!
+
+  """Cantidad de suscripciones de tipo Monthly."""
+  Monthly: Int!
+
+  """Cantidad de suscripciones de tipo Annual."""
+  Annual: Int!
+}
+
+"""
+Respuesta de autenticación que incluye el token y la información del usuario
+"""
+type AuthResponse {
+  """Token de autenticación JWT para el usuario"""
+  token: String!
+
+  """Información del usuario autenticado"""
+  user: User!
+}
+
+type Query {
+  """
+  findAll: Devuelve todos los usuarios con paginación y filtros de roles opcionales
+  """
+  users(paginationArgs: PaginationArgs!, validRolesArgs: ValidRolesArgs!): [User!]!
+
+  """findOne: Encuentra un usuario por su ID"""
+  user(id: String!): User!
+
+  """defaultSubscription: Obtiene la suscripción predeterminada por su ID"""
+  defaultSubscription(id: String!): Subscription!
+
+  """getSubscription: Devuelve todas las suscripciones"""
+  getSubscription: [Subscription!]!
+
+  """countUser: Cuenta el número total de usuarios registrados"""
+  countUser: Int!
+
+  """countSubscriptions: Cuenta el número total de suscripciones"""
+  countSubscriptions: Int!
+
+  """getSubscriptionCounts: Obtiene el número de suscripciones por tipo"""
+  getSubscriptionCounts: SubscriptionCount!
+
+  """Obtiene todos los registros de historial de vistas"""
+  viewHistories: [ViewHistory!]!
+
+  """Obtiene un registro de historial de vistas por ID"""
+  viewHistory(id: Int!): ViewHistory!
+
+  """Obtiene todos los registros de soporte"""
+  supports: [Support!]!
+
+  """Obtiene un registro de soporte por ID"""
+  support(id: String!): Support!
+
+  """findAll: Obtiene una lista de todos los contenidos con paginación."""
+  contentAll(paginationContentArgs: PaginationContentArgs!): [Content!]!
+
+  """findOne: Obtiene un contenido específico por su ID."""
+  contentOne(id: String!): Content!
+
+  """getRate: Obtiene la tasa de un contenido específico por su ID."""
+  getRate(contentId: String!): Float!
+
+  """
+  revalidateToken: Revalida el token de autenticación actual usando el token proporcionado en las cabeceras de la solicitud y devuelve un nuevo token.
+  """
+  revalite: AuthResponse!
+
+  """findOne: Obtiene una reseña específica basada en el ID proporcionado."""
+  review(id: String!): Review!
+}
+
+"""Argumentos para la paginación de resultados."""
+input PaginationArgs {
+  """
+  Límite de resultados a devolver. Este campo es opcional y debe ser un número entero.
+  """
+  limit: Int
+
+  """
+  Desplazamiento de los resultados. Este campo es opcional y debe ser un número entero.
+  """
+  offset: Int
+}
+
+"""Argumentos para especificar roles válidos."""
+input ValidRolesArgs {
+  """
+  Lista de roles válidos para los cuales se aplican las reglas. Este campo es opcional y debe ser un arreglo de roles válidos.
+  """
+  roles: [ValidRoles!] = []
+}
+
+"""
+Roles de usuario válidos en el sistema, incluyendo admin, usuario y superusuario
+"""
+enum ValidRoles {
+  admin
+  user
+  superUser
+}
+
+"""Argumentos para la paginación del contenido."""
+input PaginationContentArgs {
+  """
+  Límite de resultados a devolver. Este campo es opcional y debe ser un número entero.
+  """
+  limit: Int
+
+  """
+  Desplazamiento de los resultados. Este campo es opcional y debe ser un número entero.
+  """
+  offset: Int
+}
+
+type Mutation {
+  """createUser: Crea un nuevo usuario y devuelve el usuario creado"""
+  createUser(createUserInput: CreateUserInput!): User!
+
+  """updateUser: Actualiza la información de un usuario existente"""
+  updateUser(updateUserInput: UpdateUserInput!): User!
+
+  """
+  removeUser: Elimina un usuario por su ID y devuelve un mensaje de confirmación
+  """
+  removeUser(id: String!): String!
+
+  """updateSubscription: Actualiza una suscripción existente"""
+  updateSubscription(updateSubscriptionInput: UpdateSubscriptionInput!): Subscription
+
+  """Crea un nuevo registro de historial de vistas"""
+  createViewHistory(createViewHistoryInput: CreateViewHistoryInput!): ViewHistory!
+
+  """Actualiza un registro de historial de vistas"""
+  updateViewHistory(updateViewHistoryInput: UpdateViewHistoryInput!): ViewHistory!
+
+  """Elimina un registro de historial de vistas por ID"""
+  removeViewHistory(id: Int!): ViewHistory!
+
+  """Crea un nuevo registro de soporte"""
+  createSupport(createSupportInput: CreateSupportInput!): Support!
+
+  """Actualiza un registro de soporte por ID"""
+  updateSupport(id: String!, updateSupportInput: UpdateSupportInput!): Support!
+
+  """Elimina un registro de soporte por ID"""
+  removeSupport(id: String!): Support!
+
+  """
+  createContent: Crea un nuevo contenido con la información proporcionada.
+  """
+  createContent(createContentInput: CreateContentInput!): Content!
+
+  """
+  updateContent: Actualiza un contenido existente con la nueva información proporcionada.
+  """
+  updateContent(updateContentInput: UpdateContentInput!): Content!
+
+  """removeContent: Elimina un contenido específico por su ID."""
+  removeContent(id: String!): Content!
+
+  """
+  signup: Registra un nuevo usuario con la información proporcionada y devuelve un token de autenticación.
+  """
+  signup(signupInput: SignupInput!): AuthResponse!
+
+  """
+  login: Inicia sesión con las credenciales proporcionadas y devuelve un token de autenticación.
+  """
+  login(loginInput: LoginInput!): AuthResponse!
+
+  """executeSeed: Ejecuta la construcción de la base de datos"""
+  executeSeed: Boolean!
+
+  """
+  createCheckoutSession: Crea una sesión de pago en Stripe y devuelve el ID de la sesión
+  """
+  createCheckoutSession(createCheckoutSessionDto: CreateCheckoutSessionDto!): String!
+
+  """
+  createReview: Crea una nueva reseña en la plataforma. Lanza una excepción si el campo de reseña es nulo.
+  """
+  createReview(createReviewInput: CreateReviewInput!): Review!
+
+  """
+  updateReview: Actualiza una reseña existente con la información proporcionada en el input de actualización.
+  """
+  updateReview(updateReviewInput: UpdateReviewInput!): Review!
+
+  """removeReview: Elimina una reseña basada en el ID proporcionado."""
+  removeReview(id: String!): Review!
+}
+
+"""Datos necesarios para crear un nuevo usuario."""
+input CreateUserInput {
+  """
+  Correo electrónico del usuario. Debe ser una dirección de correo electrónico válida.
+  """
+  email: String!
+
+  """
+  Contraseña del usuario. Debe cumplir con los requisitos de una contraseña fuerte.
+  """
+  password: String!
+
+  """
+  Primer nombre del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 80 caracteres.
+  """
+  firstName: String!
+
+  """
+  Apellido del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 40 caracteres.
+  """
   lastName: String!
 }
 
-input LoginInput {
+"""Datos necesarios para actualizar la información de un usuario."""
+input UpdateUserInput {
+  """
+  Correo electrónico del usuario. Debe ser una dirección de correo electrónico válida.
+  """
+  email: String
+
+  """
+  Contraseña del usuario. Debe cumplir con los requisitos de una contraseña fuerte.
+  """
+  password: String
+
+  """
+  Primer nombre del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 80 caracteres.
+  """
+  firstName: String
+
+  """
+  Apellido del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 40 caracteres.
+  """
+  lastName: String
+
+  """
+  Identificador único del usuario. Este campo es obligatorio para actualizar la información del usuario.
+  """
+  id: String!
+
+  """
+  Imágenes del usuario. Este campo es opcional y puede contener un array de URLs de imágenes.
+  """
+  userImage: [String!]
+
+  """
+  Roles del usuario. Este campo es opcional y puede contener un array de roles asignados al usuario.
+  """
+  roles: [String!]
+}
+
+"""Input para actualizar una suscripción existente."""
+input UpdateSubscriptionInput {
+  """
+  Tipo de suscripción. Puede ser uno de los valores definidos en el enum `Tipo`.
+  """
+  tipo: Tipo
+
+  """Precio de la suscripción. Debe ser un número positivo."""
+  price: Int
+
+  """
+  ID del usuario asociado con la suscripción. Este campo es opcional y debe ser un UUID válido si se proporciona.
+  """
+  userId: String
+
+  """
+  ID de Stripe asociado con la suscripción. Este campo es opcional y debe ser una cadena si se proporciona.
+  """
+  stripeId: String
+}
+
+"""Datos necesarios para crear un historial de visualización."""
+input CreateViewHistoryInput {
+  """
+  Este campo sirve como ejemplo y puede ser reemplazado por campos específicos necesarios para la creación del historial de visualización.
+  """
+  exampleField: Int!
+}
+
+"""Datos necesarios para actualizar un historial de visualización."""
+input UpdateViewHistoryInput {
+  """
+  Este campo sirve como ejemplo y puede ser reemplazado por campos específicos necesarios para la creación del historial de visualización.
+  """
+  exampleField: Int
+
+  """
+  ID único del historial de visualización a actualizar. Este campo se utiliza para identificar el historial de visualización específico que se desea actualizar.
+  """
+  id: Int!
+}
+
+"""Input para crear una solicitud de soporte."""
+input CreateSupportInput {
+  """
+  ID del usuario que solicita soporte. Este campo debe ser un UUID válido y no puede estar vacío.
+  """
+  userId: String!
+
+  """
+  Descripción del problema que el usuario está experimentando. Este campo debe ser una cadena de texto y no puede estar vacío.
+  """
+  descripcion_problema: String!
+}
+
+"""Input para actualizar una solicitud de soporte."""
+input UpdateSupportInput {
+  """
+  ID del usuario que solicita soporte. Este campo debe ser un UUID válido y no puede estar vacío.
+  """
+  userId: String
+
+  """
+  Descripción actualizada del problema que el usuario está experimentando. Este campo debe ser una cadena de texto y es opcional.
+  """
+  descripcion_problema: String
+}
+
+"""Input para crear un nuevo contenido multimedia."""
+input CreateContentInput {
+  """Título del contenido."""
+  title: String!
+
+  """Descripción detallada del contenido."""
+  description: String!
+
+  """URL de la imagen asociada al contenido (opcional)."""
+  image: String
+
+  """Duración del contenido."""
+  duration: String!
+
+  """Categorías asociadas al contenido."""
+  category: [String!]!
+
+  """Tipo de contenido (opcional)."""
+  type: Type
+
+  """Estado del contenido (opcional)."""
+  status: Status
+
+  """Lista de URLs del contenido."""
+  contentUrl: [String!]!
+}
+
+"""Input para actualizar el contenido existente."""
+input UpdateContentInput {
+  """Título del contenido."""
+  title: String
+
+  """Descripción detallada del contenido."""
+  description: String
+
+  """URL de la imagen asociada al contenido (opcional)."""
+  image: String
+
+  """Duración del contenido."""
+  duration: String
+
+  """Categorías asociadas al contenido."""
+  category: [String!]
+
+  """Tipo de contenido (opcional)."""
+  type: Type
+
+  """Estado del contenido (opcional)."""
+  status: Status
+
+  """Lista de URLs del contenido."""
+  contentUrl: [String!]
+
+  """ID del contenido a actualizar."""
+  id: String!
+
+  """Cantidad opcional relacionada con el contenido."""
+  amount: Int
+}
+
+"""Datos necesarios para el registro de un nuevo usuario."""
+input SignupInput {
+  """
+  Correo electrónico del usuario. Debe ser una dirección de correo electrónico válida.
+  """
   email: String!
+
+  """
+  Contraseña del usuario. Debe cumplir con los requisitos de una contraseña fuerte.
+  """
+  password: String!
+
+  """
+  Primer nombre del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 40 caracteres.
+  """
+  firstName: String!
+
+  """
+  Apellido del usuario. Debe tener una longitud mínima de 1 carácter y máxima de 40 caracteres.
+  """
+  lastName: String!
+}
+
+"""Datos necesarios para el inicio de sesión del usuario."""
+input LoginInput {
+  """
+  Correo electrónico del usuario. Debe ser una dirección de correo electrónico válida.
+  """
+  email: String!
+
+  """
+  Contraseña del usuario. Debe cumplir con los requisitos de una contraseña fuerte.
+  """
   password: String!
 }
 
+"""Input para crear una sesión de pago en el sistema de suscripciones."""
 input CreateCheckoutSessionDto {
+  """El identificador del precio asociado a la sesión de pago."""
   priceId: String!
+
+  """El precio de la sesión de pago, debe ser un número positivo."""
   price: Float!
+
+  """El tipo de suscripción asociado a la sesión de pago."""
   tipo: Tipo!
+
+  """
+  El identificador del usuario que realiza la sesión de pago, es opcional.
+  """
   userId: String!
 }
 
+"""Input para crear una nueva reseña."""
 input CreateReviewInput {
+  """Contenido de la reseña proporcionada por el usuario."""
   review: String!
+
+  """ID único del usuario que realiza la reseña."""
   userId: String!
+
+  """ID único del contenido al que se le está realizando la reseña."""
   contentId: String!
 }
 
+"""Input para actualizar una reseña existente."""
 input UpdateReviewInput {
+  """Contenido de la reseña proporcionada por el usuario."""
   review: String
+
+  """ID único del usuario que realiza la reseña."""
   userId: String
+
+  """ID único del contenido al que se le está realizando la reseña."""
   contentId: String
+
+  """ID único de la reseña que se desea actualizar."""
   id: String!
 }

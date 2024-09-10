@@ -9,25 +9,25 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@ObjectType() // Decorador para convertir la clase en un tipo GraphQL
+@ObjectType({ description: 'Entidad que representa el historial de vistas de contenido por parte de los usuarios.' })
 @Entity({
   name: 'view-history',
 })
 export class ViewHistory {
-  @Field(() => ID) // Decorador para el campo ID
+  @Field(() => ID, { description: 'Identificador único del historial de vistas' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Field(() => User) // Decorador para la relación Many-to-One con User
+  @Field(() => User, { description: 'Usuario que realizó la vista del contenido' })
   @ManyToOne(() => User, (user) => user.viewingHistory)
   user: User;
 
-  @Field(() => Content) // Decorador para la relación Many-to-One con Contenido
-  @ManyToOne(() => Content, (contenido) => contenido.viewingHistories)
+  @Field(() => Content, { description: 'Contenido que fue visto por el usuario' })
+  @ManyToOne(() => Content, (content) => content.viewingHistories)
   @JoinColumn({ name: 'contenido_id' })
   contenido: Content;
 
-  @Field() // Decorador para el campo fecha_visualizacion
+  @Field(() => Date, { description: 'Fecha en la que se realizó la visualización del contenido' })
   @Column({
     type: 'date',
   })
