@@ -54,7 +54,7 @@ export class User {
   @Field(() => [String], { nullable: true, description: 'Vistas del usuario' })
   views?: string[];
 
-  @Column('text', { array: true, default: ['user', 'admin'] })
+  @Column('text', { array: true, default: ['user'] })
   @Field(() => [String], { description: 'Roles asignados al usuario' })
   roles: string[];
 
