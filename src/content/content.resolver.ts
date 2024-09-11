@@ -8,6 +8,7 @@ import { PaginationContentArgs } from './dto/args/pagination-content.args';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guards'; */
 import { CurrentUser } from 'src/auth/decorator/current-user.decorator';
 import { ValidRoles } from 'src/auth/enums/valid-roles.emun';
+import { Status } from './dto/enums/content.enum';
 
 @Resolver(() => Content)
 //@UseGuards(JwtAuthGuard)
@@ -29,10 +30,18 @@ export class ContentResolver {
     name: 'contentAll', 
     description: 'findAll: Obtiene una lista de todos los contenidos con paginación.' 
   })
-  findAll(
+  async findAll(
     @Args('paginationContentArgs') paginationContentArgs: PaginationContentArgs,
   ) {
-    return this.contentService.findAll(paginationContentArgs);
+    const getContent = await this.contentService.findAll(paginationContentArgs);
+    return getContent.filter((content) => content.status === Status.active);  }
+
+  @Query(() => [Content], { 
+    name: 'contentAllDashboard', 
+    description: 'findAll: Obtiene una lista de todos los contenidos con paginación.' 
+  })
+  findAllDashboard() {
+    return this.contentService.findAllDashboard();
   }
 
   @Query(() => Content, { 

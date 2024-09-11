@@ -245,6 +245,9 @@ type Query {
   """findAll: Obtiene una lista de todos los contenidos con paginación."""
   contentAll(paginationContentArgs: PaginationContentArgs!): [Content!]!
 
+  """findAll: Obtiene una lista de todos los contenidos con paginación."""
+  contentAllDashboard: [Content!]!
+
   """findOne: Obtiene un contenido específico por su ID."""
   contentOne(id: String!): Content!
 

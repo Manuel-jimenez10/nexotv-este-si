@@ -48,6 +48,15 @@ export class ContentService {
     }
   }
 
+  async findAllDashboard(): Promise<Content[]> {
+    try {
+      const content = await this.contenidoRepository.find();
+      return content;
+    } catch (error) {
+      this.handleDbErros(error);
+    }
+  }
+
   async findOne(id: string): Promise<Content> {
     try {
       const contenido = await this.contenidoRepository.findOne({
