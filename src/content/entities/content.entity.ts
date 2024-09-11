@@ -68,8 +68,8 @@ export class Content {
   review: Review[];
 
   @Field(() => Int, { nullable: true, description: 'rate: Calificación del contenido.' })
-  @Column({ type: 'int', default: 0 })
-  rate: number;
+  @Column({ default: 0, nullable: true})
+  rate?: number;
 
   @Column({ type: 'int', default: 0 })
   counterRate: number;

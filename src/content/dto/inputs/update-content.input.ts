@@ -13,4 +13,9 @@ export class UpdateContentInput extends PartialType(CreateContentInput) {
   @IsInt()
   @IsOptional()
   amount?: number;
+
+  @Field(() => Int, {nullable: true})
+  @IsOptional()
+  @IsInt()
+  rate?: number;
 }
