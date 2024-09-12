@@ -67,9 +67,13 @@ export class Content {
   @OneToMany(() => Review, (review) => review.content)
   review: Review[];
 
-  @Field(() => Int, { nullable: true, description: 'rate: Calificación del contenido.' })
-  @Column({ default: 0, nullable: true})
-  rate?: number;
+ /* @Field(() => Int, {
+    nullable: true,
+    description: 'rate: Calificación del contenido.',
+  }) */
+    @Column({ type: 'float', default: 0, nullable: true })
+    rate?: number;
+  
 
   @Column({ type: 'int', default: 0 })
   counterRate: number;
