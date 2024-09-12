@@ -57,9 +57,6 @@ type Content {
 
   """viewingHistories: Historial de visualización asociado al contenido."""
   viewingHistories: [ViewHistory!]
-
-  """rate: Calificación del contenido."""
-  rate: Int
 }
 
 """
